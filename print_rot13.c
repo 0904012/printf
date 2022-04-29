@@ -1,43 +1,36 @@
 #include "main.h"
 /**
- * print_rot13 - prints string in rot13 format
- * @list: list of arguments
- * Return: number of prints
+ * print_rot13 - print a string using rot13
+ * @valist: va_list argumnets of _printf function
+ * Return: number of character printed
  */
-int print_rot13(va_list list)
+int print_rot13(va_list valist)
 {
-	int i = 0, cop = 0, len = 0;
-	char rot[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-	char num[] = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
-	char *cpy;
-	char *string = va_arg(list, char *);
+	int j, i;
+	char rot13[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	char ROT13[] = "nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM";
+	char *str = va_arg(valist, char *);
 
-	for (i = 0; string[i] != '\0'; i++)
-		len++;
-	cpy = malloc(sizeof(char) * (len + 1));
-	if (cpy[i] == '\0')
-		return ('\0');
-	for (i = 0; i <= len; i++)
+	if (str == NULL)
 	{
-		cpy[i] = string[i];
+		return (_puts("(nil)"));
 	}
-	for (i = 0; cpy[i]; i++)
+	for (i = 0; str[i]; i++)
 	{
-		for (cop = 0; rot[cop]; cop++)
+		if (str[i] < 'A' || str[i] > 'z' || (str[i] < 'a' && str[i] > 'Z'))
 		{
-			if (cpy[i] == rot[cop])
+			print_out(str[i]);
+		}
+		else
+		{
+			for (j = 0; j < 52; j++)
 			{
-				cpy[i] = num[cop];
-				break;
+				if (str[i] == rot13[j])
+				{
+					print_out(ROT13[j]);
+				}
 			}
 		}
 	}
-	i = 0;
-	while (cpy[i] != '\0')
-	{
-		_putchar(cpy[i]);
-		i++;
-	}
-	free(cpy);
-	return (len);
+	return (j);
 }
